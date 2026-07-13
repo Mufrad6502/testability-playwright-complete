@@ -1,0 +1,31 @@
+{
+  "name": "testability-playwright-conduit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Complete Playwright TypeScript solution for the Testability Conduit QA assignment",
+  "scripts": {
+    "test": "playwright test",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "test:headed": "playwright test --project=chromium --headed",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "report": "playwright show-report",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings=0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "ci": "npm run typecheck && npm run lint && playwright test"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^9.8.0",
+    "@playwright/test": "^1.54.1",
+    "@types/node": "^22.15.3",
+    "dotenv": "^16.5.0",
+    "eslint": "^9.25.1",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.31.0"
+  }
+}

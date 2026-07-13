@@ -1,0 +1,59 @@
+name: Playwright E2E
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [chromium, firefox, webkit]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps ${{ matrix.project }}
+
+      - name: Static validation
+        run: npm run typecheck && npm run lint
+
+      - name: Run ${{ matrix.project }} tests
+        run: npx playwright test --project=${{ matrix.project }}
+        env:
+          BASE_URL: https://conduit.bondaracademy.com
+          API_URL: https://conduit-api.bondaracademy.com/api
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ matrix.project }}
+          path: playwright-report/
+          retention-days: 14
+
+      - name: Upload traces, screenshots, and videos
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.project }}
+          path: test-results/
+          retention-days: 14
