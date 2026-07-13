@@ -17,7 +17,6 @@ The solution covers all mandatory scenarios and bonus expectations from the supp
 | Filter Articles by Tag | Deterministic API data, UI tag click, all-card and API filtering validation | Unknown tag returns safe empty feed                        |
 | Update User Settings   | UI update, API validation, reload persistence, API restoration              | Invalid email rejected and not persisted                   |
 
-See [`ASSIGNMENT_COVERAGE.md`](ASSIGNMENT_COVERAGE.md) for direct traceability to every PDF requirement.
 
 ## Architecture
 
@@ -171,4 +170,3 @@ git remote add origin <your-repository-url>
 git push -u origin main
 ```
 
-Use the message in [`SUBMISSION_EMAIL.md`](SUBMISSION_EMAIL.md) after replacing the repository placeholder.
